@@ -1,0 +1,37 @@
+{
+  "name": "intern-setu-fe",
+  "version": "0.1.0",
+  "private": true,
+  "author": "Yash Ladlapure <yashladlapure@gmail.com>",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint"
+  },
+  "dependencies": {
+    "@reduxjs/toolkit": "^2.11.1",
+    "axios": "^1.13.2",
+    "clsx": "^2.1.1",
+    "jose": "^6.1.3",
+    "jwt-decode": "^4.0.0",
+    "lucide-react": "^0.560.0",
+    "next": "^16.0.10",
+    "next-themes": "^0.4.6",
+    "react": "19.2.1",
+    "react-dom": "19.2.1",
+    "react-hot-toast": "^2.6.0",
+    "react-redux": "^9.2.0",
+    "tailwind-merge": "^3.4.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.0.8",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  }
+}
