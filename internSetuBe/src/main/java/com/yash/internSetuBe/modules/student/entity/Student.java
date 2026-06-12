@@ -35,6 +35,7 @@ public class Student {
 
     private String phoneNumber;
 
+    @Enumerated(EnumType.STRING)
     private Gender gender;
 
     private LocalDate dateOfBirth;

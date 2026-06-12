@@ -41,6 +41,7 @@ public class InternshipApplication {
 
     private LocalDateTime appliedAt;
 
+    @Enumerated(EnumType.STRING)
     private ApplicationStatus status;
 
     @Column(columnDefinition = "TEXT")

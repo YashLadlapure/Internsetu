@@ -6,7 +6,7 @@ import Card from "@/components/ui/Card";
 import Input from "@/components/ui/Input";
 import { useState } from "react"
 
-const page = () => {
+const Page = () => {
   const [status, setStatus] = useState<{msg: string, error: boolean} | null>(null);
   const [teacherEmail, setTeacherEmail] = useState("");
   const [tpoEmail, setTpoEmail] = useState("");
@@ -92,4 +92,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page

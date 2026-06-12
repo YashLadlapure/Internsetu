@@ -1,4 +1,3 @@
-import { jwtDecode } from "jwt-decode";
 import { NextRequest, NextResponse } from "next/server";
 import { jwtVerify, JWTPayload } from "jose";
 
@@ -8,7 +7,9 @@ interface VerifyPayload extends JWTPayload {
     userId: number | string;
 }
 
-const key = new TextEncoder().encode(process.env.JWT_SECRET_KEY ||"default_secret_key");
+const key = new TextEncoder().encode(process.env.JWT_SECRET || process.env.JWT_SECRET_KEY || "replace_with_a_secure_jwt_secret");
+
+const roleDashboardPath = (role: VerifyPayload["role"]) => `/${role.toLowerCase()}/dashboard`;
 
 export const proxy = async (req: NextRequest) => {
 
@@ -28,17 +29,18 @@ export const proxy = async (req: NextRequest) => {
         const { payload } = await jwtVerify(token, key); 
         const decodedToken = payload as VerifyPayload;
 
-        const role = decodedToken.role.toLowerCase();;
+        const dashboardPath = roleDashboardPath(decodedToken.role);
+        const rolePath = `/${decodedToken.role.toLowerCase()}`;
 
         if(isPublicPath) 
-            return NextResponse.redirect(new URL(`/${role}/dashboard`, req.url));
+            return NextResponse.redirect(new URL(dashboardPath, req.url));
 
-        if(!pathname.startsWith(`/${role}`)){
-            return NextResponse.redirect(new URL(`/${role}/dashboard`, req.url));
+        if(!pathname.startsWith(rolePath)){
+            return NextResponse.redirect(new URL(dashboardPath, req.url));
         } 
 
     }
-    catch (err: any) {
+    catch {
 
         if(isPublicPath) {
             const res = NextResponse.next();

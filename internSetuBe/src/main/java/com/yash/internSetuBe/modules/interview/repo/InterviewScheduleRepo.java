@@ -9,14 +9,16 @@ import java.util.List;
 public interface InterviewScheduleRepo extends JpaRepository<InterviewSchedule, Long> {
 
     @Query("""
-            SELECT is
-            FROM InterviewSchedule is
-            JOIN FETCH is.application a
-            JOIN FETCh a.internship i
-            JOIN FETCH i.student s
-            JOIN FETCH s.user u
-            JOIN FETCH i.college c
-            WHERE i.employer.user.id = :userId
+            SELECT schedule
+            FROM InterviewSchedule schedule
+            JOIN FETCH schedule.application application
+            JOIN FETCH application.internshipPosting posting
+            JOIN FETCH application.student student
+            JOIN FETCH student.user user
+            JOIN FETCH posting.company company
+            JOIN FETCH posting.college college
+            JOIN Employer employer ON company.id = employer.company.id
+            WHERE employer.id = :userId
         """)
     List<InterviewSchedule> findByEmployerUserId(Long userId);
 }

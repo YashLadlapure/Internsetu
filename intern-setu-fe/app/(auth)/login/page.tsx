@@ -15,7 +15,7 @@ const page = () => {
                 <p className="text-gray-500">Please login to continue</p>
                 <LoginForm />
                 <p className="text-gray-500 dark:text-gray-400 pt-5 px-2">
-                    Don't have an Account? sign up as  <span className="text-purple-600 cursor-pointer">
+                    Don&apos;t have an Account? sign up as  <span className="text-purple-600 cursor-pointer">
                         <Link href="/register/student">
                             Student
                         </Link>

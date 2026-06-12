@@ -16,7 +16,7 @@ const AddCollegeModal = ({ onClose }: { onClose: () => void }) => {
     const [isLoading, setIsLoading] = useState(false)
     const [error, setError] = useState<string | null>(null)
 
-    const [colleges, setColleges] = useState([])
+    const [colleges, setColleges] = useState<{ id: number; name: string }[]>([])
 
     const dispatch = useAppDispatch()
 
@@ -92,7 +92,7 @@ const AddCollegeModal = ({ onClose }: { onClose: () => void }) => {
                 <div className="flex flex-col justify-center mt-4 gap-4">
                     <DropDownmenu
                         placeholder="Select college"
-                        optoins={colleges.map((college: any) => ({ 
+                        optoins={colleges.map((college) => ({ 
                             label: college.name, 
                             value: college.id 
                         }))}

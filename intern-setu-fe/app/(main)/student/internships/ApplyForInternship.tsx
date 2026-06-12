@@ -75,8 +75,8 @@ const ApplyForInternship = ({ internshipId, onClose }: ApplyForInternshipProps) 
 
       setSuccess("Application submitted successfully.");
       dispatch(setApplidToInternship(internshipId));    
-    } catch (err: any) {
-      setError(err.message || "Failed to submit application.");
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : "Failed to submit application.");
     } finally {
       setSubmitting(false);
     }

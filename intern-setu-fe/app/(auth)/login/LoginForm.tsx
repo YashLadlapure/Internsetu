@@ -3,7 +3,6 @@ import { useState } from "react";
 import Input from "@/components/ui/Input";
 import Button from "@/components/ui/Button";
 import { loginAction } from "@/actions/auth";
-import Link from "next/link";
 import { callBackend } from "@/actions/backend-proxy";
 
 type FormState = {
@@ -54,8 +53,8 @@ const LoginForm = () => {
                 return;
             }
 
-        } catch (error: any) {
-            setErrorMessage(error.response?.data?.message)
+        } catch (error: unknown) {
+            setErrorMessage(error instanceof Error ? error.message : "Login failed")
         }
         finally {
             setLoading(false);
@@ -83,10 +82,8 @@ const LoginForm = () => {
                 setForgotPasswordLoading(false);
                 return;
             }
-            console.log(res.data);
-            
             setShowForgotPassword(false);
-        } catch (error: any) {
+        } catch {
             setForgotPasswordMessage("An error occurred. Please try again.");
         }
         finally {
@@ -144,7 +141,7 @@ const LoginForm = () => {
                     <div className="bg-white dark:bg-neutral-800 rounded-lg p-6 w-96 shadow-lg">
                         <h2 className="font-bold text-xl mb-4">Forgot Password</h2>
                         <p className="text-gray-600 dark:text-gray-400 text-sm mb-4">
-                            Enter your email address and we'll send you a link to reset your password.
+                            Enter your email address and we&apos;ll send you a link to reset your password.
                         </p>
                         <Input
                             value={forgotPasswordEmail}

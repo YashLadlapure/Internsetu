@@ -54,7 +54,7 @@ const page = () => {
                 p-2 px-4 text-base rounded-full cursor-pointer
               `}
             >
-              I'm a Student
+              I&apos;m a Student
             </Link>
             
             <Link 
@@ -63,7 +63,7 @@ const page = () => {
                 p-2 px-4 text-base rounded-full cursor-pointer
               `}  
             >
-              I'm a Recruiter
+              I&apos;m a Recruiter
             </Link>
           </div>
         </div>

@@ -17,6 +17,7 @@ import com.yash.internSetuBe.modules.employer.repo.CompanyRepo;
 import com.yash.internSetuBe.modules.internship.dto.response.EmployerInternshipGetResponse;
 import com.yash.internSetuBe.modules.employer.entity.CompanyCollegeVerification;
 import com.yash.internSetuBe.modules.identity.service.UserService;
+import com.yash.internSetuBe.modules.identity.service.EmailService;
 import com.yash.internSetuBe.modules.placementCell.entity.College;
 import com.yash.internSetuBe.modules.placementCell.repo.CollegeRepo;
 import com.yash.internSetuBe.modules.internship.mapper.InternshipPostingRepo;
@@ -41,6 +42,7 @@ public class EmployerService {
     private final CompanyCollegeVerificationRepo companyCollegeVerificationRepo;
     private final SkillRepo skillRepo;
     private final InternshipApplicationRepo internshipApplicationRepo;
+    private final EmailService emailService;
 
 
     private final EmployerMapper employerMapper;
@@ -97,5 +99,17 @@ public class EmployerService {
                 .orElseThrow(() -> new EntityNotFoundException("Application not found"));
         application.setStatus(status);
         return;
+    }
+
+    public void sendApplicationEmail(Long applicationId, java.util.Map<String, String> emailRequest) {
+        Long userId = userService.getCurrentUserId();
+        InternshipApplication application = internshipApplicationRepo.findByIdAndEmployerUserId(applicationId, userId)
+                .orElseThrow(() -> new EntityNotFoundException("Application not found"));
+
+        String recipientEmail = emailRequest.getOrDefault("recipientEmail", application.getStudent().getUser().getEmail());
+        String subject = emailRequest.getOrDefault("subject", "Update on Your Application");
+        String message = emailRequest.getOrDefault("message", "");
+
+        emailService.sendMail(recipientEmail, subject, message);
     }
 }

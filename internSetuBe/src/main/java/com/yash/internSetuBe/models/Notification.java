@@ -30,6 +30,7 @@ public class Notification {
 
     private String  message;
 
+    @Enumerated(EnumType.STRING)
     private NotificationType type;
 
     private Boolean isRead;

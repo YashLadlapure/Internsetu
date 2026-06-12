@@ -85,8 +85,8 @@ const EditStudentApplication = ({ applicationId, onClose }: EditStudentApplicati
       setSuccess("Application updated successfully.");
       dispatch(updateApplication(res.data));
       onClose();
-    } catch (err: any) {
-      setError(err.message || "Failed to update application.");
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : "Failed to update application.");
     } finally {
       setSubmitting(false);
     }

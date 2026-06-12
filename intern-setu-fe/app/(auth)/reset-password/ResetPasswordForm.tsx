@@ -3,7 +3,6 @@ import { useState } from "react"
 import Input from "@/components/ui/Input"
 import Button from "@/components/ui/Button"
 import { useRouter } from "next/navigation"
-import axiosApi from "@/config/axiosConfig"
 import { callBackend } from "@/actions/backend-proxy"
 
 type ResetPasswordFormProps = {
@@ -56,8 +55,8 @@ const ResetPasswordForm = ({ token }: ResetPasswordFormProps) => {
             
             router.push("/login");            
 
-        } catch (error: any) {            
-            setErrorMessage(error.message || "Failed to reset password. Please try again.")
+        } catch (error: unknown) {            
+            setErrorMessage(error instanceof Error ? error.message : "Failed to reset password. Please try again.")
         } finally {
             setLoading(false)
         }

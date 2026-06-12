@@ -55,7 +55,26 @@ public class EmployerController {
 
     @GetMapping("/application/{applicationId}/schedule-interview")
     public ResponseEntity<List<EmployerInterviewScheduleResponse>> getInterviewSchedule(@PathVariable Long applicationId) {
-        return ResponseEntity.status(HttpStatus.OK).body(interviewScheduleService.getEmployerInterviewSchedule(applicationId));
+        return ResponseEntity.status(HttpStatus.OK).body(interviewScheduleService.getEmployerInterviewSchedules());
+    }
+
+    @GetMapping("/interview")
+    public ResponseEntity<List<EmployerInterviewScheduleResponse>> getInterviews() {
+        return ResponseEntity.status(HttpStatus.OK).body(interviewScheduleService.getEmployerInterviewSchedules());
+    }
+
+    @PostMapping("/application/{applicationId}/schedule-interview")
+    public ResponseEntity<EmployerInterviewScheduleResponse> scheduleInterview(
+            @PathVariable Long applicationId,
+            @Valid @RequestBody EmployerInterviewScheduleRequest request
+    ) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(interviewScheduleService.scheduleInterview(applicationId, request));
+    }
+
+    @PostMapping("/application/{applicationId}/send-email")
+    public String sendApplicationEmail(@PathVariable Long applicationId, @RequestBody java.util.Map<String, String> emailRequest) {
+        employerService.sendApplicationEmail(applicationId, emailRequest);
+        return "Email sent successfully";
     }
 
 }

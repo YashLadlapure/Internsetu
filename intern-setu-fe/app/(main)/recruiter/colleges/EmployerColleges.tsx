@@ -130,7 +130,7 @@ const EmployerColleges = ({ showAddButton = false }: { showAddButton?: boolean }
               {companyVerification.text && (
                 <div className="mt-4 pt-3 border-t border-neutral-50/50 dark:border-neutral-900/50">
                   <p className="text-xs text-neutral-600 dark:text-neutral-400 bg-neutral-50/50 dark:bg-neutral-900/50 p-2 rounded italic">
-                    "{companyVerification.text}"
+                    &quot;{companyVerification.text}&quot;
                   </p>
                 </div>
               )}

@@ -39,6 +39,7 @@ public class InternshipPosting {
 
     private Double salary;
 
+    @Enumerated(EnumType.STRING)
     private InternshipLocationType location;
 
     private String duration;
@@ -47,6 +48,7 @@ public class InternshipPosting {
 
     private LocalDateTime deadline;
 
+    @Enumerated(EnumType.STRING)
     private InternshipStatus status;
 
     @CreationTimestamp

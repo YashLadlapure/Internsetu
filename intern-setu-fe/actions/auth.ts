@@ -4,6 +4,7 @@ import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
 import axiosApi from "@/config/axiosConfig"
 import { jwtDecode } from "jwt-decode"
+import { AxiosError } from "axios"
 
 
 const loginAction = async (formData: {email: string, password: string}) => {
@@ -22,7 +23,7 @@ const loginAction = async (formData: {email: string, password: string}) => {
         const cookieStore = await cookies()
         cookieStore.set("token", token, {
             httpOnly: true,
-            secure: true,
+            secure: process.env.NODE_ENV === "production",
             path: '/',
             maxAge: 60 * 60 * 24 * 7 
         })
@@ -35,13 +36,11 @@ const loginAction = async (formData: {email: string, password: string}) => {
                 userId: number | string;
             } = jwtDecode(token) 
 
-        console.log(decodedToken);
-            
-
         redirectUrl = `/${decodedToken.role.toLowerCase()}/dashboard`
     }
-    catch(err: any){
-        return {error: err.response.data.message}
+    catch(err: unknown){
+        const error = err as AxiosError<{ message?: string }>;
+        return {error: error.response?.data?.message || "Login failed"}
     }   
 
     if(redirectUrl) {

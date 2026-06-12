@@ -34,6 +34,7 @@ public class CompanyCollegeVerification {
 
     private String docs;
 
+    @Enumerated(EnumType.STRING)
     private CompanyCollegeVerificationStatus status;
 
     private String text;

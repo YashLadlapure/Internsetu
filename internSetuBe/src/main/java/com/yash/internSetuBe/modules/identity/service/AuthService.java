@@ -74,6 +74,9 @@ public class AuthService {
     @Value("${frontend.url}")
     private String frontendUrl;
 
+    @Value("${backend.url}")
+    private String backendUrl;
+
 
 
     @Transactional
@@ -103,7 +106,7 @@ public class AuthService {
                         .build()
         );
 
-        String activationLink = "http://localhost:8080/api/v1/auth/activate?token=" + user.getActivationToken();
+        String activationLink = backendUrl + "/auth/activate?token=" + user.getActivationToken();
         String subject = "Activate your intern setu account";
         String body = "click on the link to activate your account: " + activationLink;
 
@@ -190,7 +193,7 @@ public class AuthService {
                         .build()
                 );
 
-        String activationLink = "http://localhost:8080/api/v1/auth/activate?token=" + user.getActivationToken();
+        String activationLink = backendUrl + "/auth/activate?token=" + user.getActivationToken();
         String subject = "Activate your intern setu account";
         String body = "click on the link to activate your account: " + activationLink;
 
@@ -264,7 +267,7 @@ public class AuthService {
                         .build()
         );
 
-        String link = "http://localhost:8080/api/v1/auth/accept-invite?token=" + token;
+        String link = frontendUrl + "/accept-invite?token=" + token;
         String subject = "Invitation for inter setu";
         String body = "invite link to join intern setu "  + link;
 

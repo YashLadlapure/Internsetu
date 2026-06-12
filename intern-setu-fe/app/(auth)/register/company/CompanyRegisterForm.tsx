@@ -24,6 +24,11 @@ type FormState = {
 
 type FormField = keyof FormState;
 
+type BackendError = {
+    message?: string;
+    details?: Partial<Record<FormField, string>>;
+};
+
 
 const CompanyRegisterForm  = () => {
 
@@ -97,38 +102,27 @@ const CompanyRegisterForm  = () => {
                 router.push("/auth/login");
             }
             else {
-                throw {
-                    response: {
-                        data: res.data
-                    }
+                const errorData = res.data as BackendError;
+                setErrorMessage(errorData.message || "Registration failed")
+                const details = errorData.details;
+
+                if(details) {
+                    const newErrors: ErrorState = {...errors};
+                    const newForm: FormState = {...form}; 
+                    Object.keys(details).forEach((field) => {
+                        if (field in newErrors) {
+                            const fieldKey = field as FormField;
+                            newErrors[fieldKey] = details[fieldKey] || "";
+                            newForm[fieldKey] = "";
+                        }
+                    });
+
+                    setErrors(newErrors);
+                    setForm(newForm);
                 }
             }
-        } catch (error: any) {
-
-            setErrorMessage(error.response?.data?.message)
-            const details = error.response?.data?.details as Record<FormField, string> | undefined; 
-
-            console.log(details);
-            
-            
-            if(details) {
-                const newErrors: ErrorState = {...errors};
-                const newForm: FormState = {...form}; 
-                Object.keys(details).forEach((field) => {
-                    if (field in newErrors) {
-
-
-                        const fieldKey = field as FormField;
-                        newErrors[fieldKey] = details[fieldKey];
-                            
-                        newForm[fieldKey] = "";
-                    
-                    }
-                });
-
-                setErrors(newErrors);
-                setForm(newForm);
-            }
+        } catch (error: unknown) {
+            setErrorMessage(error instanceof Error ? error.message : "Registration failed")
         }
         finally {
             setLoading(false);

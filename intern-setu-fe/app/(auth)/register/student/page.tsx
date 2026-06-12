@@ -5,7 +5,7 @@ import Card from "@/components/ui/Card"
 
 const page = async () => {
   
-  let colleges = [];
+  let colleges: { id: number; name: string }[] = [];
 
   try {
     const res = await callBackend("/public/college");
@@ -16,7 +16,7 @@ const page = async () => {
       
     colleges = res.data;
   }
-  catch (error) {
+  catch {
     return <div className="flex-1 flex justify-center items-center ">
       Error fetching data
       </div>
@@ -28,7 +28,7 @@ const page = async () => {
           <Card className="p-6 lg:p-10 w-96">
             <h1 className="font-bold text-xl lg:text-2xl pt-4 pb-2">Welcome to InternSetu</h1>
             <p className="text-gray-500 ">Please register as a student to continue</p>
-            <StudentRegisterForm colleges={colleges.map((college: any) => ({ label: college.name, value: college.id }))} />
+            <StudentRegisterForm colleges={colleges.map((college) => ({ label: college.name, value: college.id }))} />
           </Card>
       </div>
     </div>

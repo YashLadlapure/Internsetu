@@ -35,6 +35,7 @@ public class InterviewSchedule {
 
     private String title;
 
+    @Enumerated(EnumType.STRING)
     private InterviewType interviewType;
 
     private LocalDateTime startTime;
@@ -45,6 +46,7 @@ public class InterviewSchedule {
 
     private String meetingNotes;
 
+    @Enumerated(EnumType.STRING)
     private ScheduleStatus scheduleStatus;
 
     @CreationTimestamp

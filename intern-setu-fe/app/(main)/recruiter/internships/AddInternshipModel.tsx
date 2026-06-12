@@ -12,6 +12,13 @@ import { Skill } from "@/lib/features/profile/types"
 import { useAppDispatch } from "@/lib/hooks"
 import { addEmployerInternship } from "@/lib/features/employer/employerSlice"
 
+type EmployerCollege = {
+    college: {
+        id: number;
+        name: string;
+    };
+};
+
 const AddInternshipModal = ({ onClose }: { onClose: () => void }) => {
 
     const dispatch = useAppDispatch();
@@ -31,7 +38,7 @@ const AddInternshipModal = ({ onClose }: { onClose: () => void }) => {
     const [isLoading, setIsLoading] = useState(false)
     const [error, setError] = useState<string | null>(null)
 
-    const [colleges, setColleges] = useState([])
+    const [colleges, setColleges] = useState<EmployerCollege[]>([])
 
 
     const fetchColleges = async () => {
@@ -135,7 +142,7 @@ const AddInternshipModal = ({ onClose }: { onClose: () => void }) => {
                     <DropDownmenu
                         label="Select College"
                         placeholder="Select college"
-                        optoins={colleges.map((college: any) => ({ 
+                        optoins={colleges.map((college) => ({ 
                             label: college.college.name, 
                             value: college.college.id 
                         }))}

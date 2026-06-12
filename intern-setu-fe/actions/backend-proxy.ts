@@ -1,10 +1,11 @@
 "use server";
 import axiosApi from "@/config/axiosConfig";
-import { AxiosRequestConfig, Method } from "axios";
+import { AxiosError, AxiosRequestConfig, Method } from "axios";
 import { cookies } from "next/headers";
 
+type BackendPayload = Record<string, unknown> | unknown[] | string | number | boolean | null;
 
-export const callBackend = async (endPoint: string, method: Method = "GET", data: any = null) => {
+export const callBackend = async (endPoint: string, method: Method = "GET", data: BackendPayload = null) => {
 
     const token = (await cookies()).get("token")?.value;
 
@@ -32,14 +33,12 @@ export const callBackend = async (endPoint: string, method: Method = "GET", data
         }
         
     }
-    catch (error: any) {
-
-        console.log(error);
-        
+    catch (error: unknown) {
+        const axiosError = error as AxiosError;
 
         return {
-            status: error.response?.status || 500,
-            data: error.response?.data || { message: "Internal Server Error" },
+            status: axiosError.response?.status || 500,
+            data: axiosError.response?.data || { message: "Internal Server Error" },
             success: false,
         }
     }   
